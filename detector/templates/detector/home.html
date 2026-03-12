@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Email Detection System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a, #2563eb);
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .title {
+            font-weight: 800;
+            font-size: 2.2rem;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        .custom-label {
+            color: #e2e8f0;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .custom-textarea {
+            border-radius: 16px;
+            border: none;
+            padding: 16px;
+            font-size: 1rem;
+            min-height: 200px;
+            resize: vertical;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .custom-textarea:focus {
+            box-shadow: 0 0 0 0.25rem rgba(96, 165, 250, 0.35);
+            border: none;
+        }
+
+        .custom-btn {
+            border: none;
+            border-radius: 14px;
+            padding: 14px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            color: white;
+            transition: 0.25s ease;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.35);
+        }
+
+        .custom-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(59, 130, 246, 0.45);
+        }
+
+        .result-box {
+            border-radius: 16px;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .result-spam {
+            background: rgba(239, 68, 68, 0.18);
+            color: #fecaca;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+        }
+
+        .result-safe {
+            background: rgba(34, 197, 94, 0.18);
+            color: #bbf7d0;
+            border: 1px solid rgba(34, 197, 94, 0.35);
+        }
+
+        .badge-top {
+            display: inline-block;
+            background: rgba(255,255,255,0.14);
+            color: #dbeafe;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container py-5 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="col-12 col-md-10 col-lg-7">
+            <div class="main-card p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="badge-top">AI Mini Project • Django + Machine Learning</div>
+                    <h1 class="title mb-2">Spam Email Detection System</h1>
+                    <p class="subtitle mb-0">
+                        Analyze email content and predict whether it is Spam or Not Spam.
+                    </p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <label for="message" class="custom-label">Enter Email Text</label>
+                    <textarea
+                        name="message"
+                        id="message"
+                        class="form-control custom-textarea"
+                        placeholder="Type or paste the email message here..."
+                    >{% if form.message.value %}{{ form.message.value }}{% endif %}</textarea>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="custom-btn">
+                            Check Prediction
+                        </button>
+                    </div>
+                </form>
+
+                {% if result %}
+                    {% if result == "Spam" %}
+                        <div class="result-box result-spam">
+                            Prediction Result: {{ result }}
+                        </div>
+                    {% else %}
+                        <div class="result-box result-safe">
+                            Prediction Result: {{ result }}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
